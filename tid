@@ -15,6 +15,10 @@ use XML::Simple; #sudo yum install  expat-devel perl-XML-Simple
 use Data::Dumper;
 setlogsock 'unix';
 openlog($0, 'pid', 'local0');
+my $regex = '\.(m2t|MP4|aac)$';
+my $dept = '/record/';
+my $nomakedir = 0;
+my $tv = '/home/foltia/php/tv/';
 my $tiddb = 'tid.db';
 my %tidarc = ();
 my $tid = \%tidarc;
@@ -83,12 +87,17 @@ syslog('info', "getting tid %d", $number);
 }
 sub main
 {
-	$tid = retrieve($tiddb) if(-f $tiddb);
+	eval { $tid = retrieve($tiddb) if(-f $tiddb); }
+	if($@) { unlink $tiddb };
+
 	foreach(@ARGV)
 	{
-		&tid_to_name($_);
-		print "$tid->{$_}->{title}";
-	}
+		s/^(MAQ|MHD)\-//;
+		next unless(/(\d+)/);
+		my $number = $1;
+		&tid_to_name($number);
+		printf "%s\n", encode('utf-8', $tid->{$number}->{title});
+	}	
 	nstore $tid, $tiddb;
 }
 &main;
