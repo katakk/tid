@@ -1,4 +1,4 @@
-# tid
+# tid [![Build Status](https://travis-ci.org/katakk/tid.svg?branch=master)](https://travis-ci.org/katakk/tid) [![codecov.io](https://codecov.io/github/katakk/tid/coverage.svg?branch=master)](https://codecov.io/github/katakk/tid?branch=master)
 しょぼいカレンダーのTIDからアニメタイトル引っ張ってくるやつ
 
 ## インストール・使い方
