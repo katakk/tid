@@ -87,8 +87,8 @@ syslog('info', "getting tid %d", $number);
 }
 sub main
 {
-	eval { $tid = retrieve($tiddb) if(-f $tiddb); }
-	if($@) { unlink $tiddb };
+	eval { $tid = retrieve($tiddb) if(-f $tiddb); };
+	if($@) { unlink $tiddb; };
 
 	foreach(@ARGV)
 	{
