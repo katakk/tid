@@ -31,8 +31,6 @@ addons:
   apt:
     packages:
     - build-essential
-    - syslog-ng
-    - syslog-ng-core
     - perlbrew
     - cpanminus
     - libwww-perl
