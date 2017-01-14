@@ -1,42 +1,11 @@
 language: c
 
 script:
-  - perlbrew available
-  - perlbrew install --notest perl5.005_04
-  - perl tid 3893
-  - perlbrew install --notest perl5.004_05
-  - perl tid 3893
-  - perlbrew install --notest perl-5.6.2
-  - perl tid 3893
-  - perlbrew install --notest perl-5.8.9
-  - perl tid 3893
-  - perlbrew install --notest perl-5.10.1
-  - perl tid 3893
-  - perlbrew install --notest perl-5.12.5
-  - perl tid 3893
-  - perlbrew install --notest perl-5.14.4
-  - perl tid 3893
-  - perlbrew install --notest perl-5.16.3
-  - perl tid 3893
-  - perlbrew install --notest perl-5.18.4
-  - perl tid 3893
-  - perlbrew install --notest perl-5.20.3
-  - perl tid 3893
-  - perlbrew install --notest perl-5.22.2
-  - perl tid 3893
-  - perlbrew install --notest perl-5.24.0
   - perl tid 3893
 
 addons:
   apt:
     packages:
-    - build-essential
-    - perlbrew
-    - cpanminus
     - libwww-perl
     - libxml-simple-perl
     - libxml-parser-perl
-    
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
-  
