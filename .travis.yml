@@ -6,7 +6,8 @@ addons:
   apt:
     packages:
     - libwww-perl
-
+    - libxml-parser-perl
+    
 after_success:
   - bash <(curl -s https://codecov.io/bash)
   
