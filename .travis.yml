@@ -5,7 +5,9 @@ script: perl tid 3893
 addons:
   apt:
     packages:
+    - build-essential
     - perlbrew
+    - cpanminus
     - libwww-perl
     - libxml-simple-perl
     - libxml-parser-perl
