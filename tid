@@ -82,7 +82,7 @@ sub tid_to_name
 	$tid->{$number}->{UserPoint} = $config->{TitleItems}->{TitleItem}->{UserPoint};
 	$tid->{$number}->{UserPointRank} = $config->{TitleItems}->{TitleItem}->{UserPointRank};
 	$tid->{$number}->{TitleYomi} = $config->{TitleItems}->{TitleItem}->{TitleYomi};
-syslog('info', "getting tid %d", $number);
+#syslog('info', "getting tid %d", $number);
 	return;
 }
 sub main
