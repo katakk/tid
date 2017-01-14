@@ -6,6 +6,7 @@ addons:
   apt:
     packages:
     - libwww-perl
+    - libxml-simple-perl
     - libxml-parser-perl
     
 after_success:
