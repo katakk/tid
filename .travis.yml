@@ -1,6 +1,8 @@
 language: c
 
-script: perl tid 3893
+script:
+  - perlbrew available
+  - perl tid 3893
 
 addons:
   apt:
