@@ -5,6 +5,7 @@ script: perl tid 3893
 addons:
   apt:
     packages:
+    - perlbrew
     - libwww-perl
     - libxml-simple-perl
     - libxml-parser-perl
