@@ -6,7 +6,7 @@ use utf8;
 use Carp;
 
 use Sys::Syslog qw(:DEFAULT setlogsock);
-use Storable qw/nstore retrieve/;
+use Storable qw/lock_nstore lock_retrieve/;
 use File::Find;
 use File::Path;
 use Encode 'encode';
@@ -56,6 +56,7 @@ sub tid_to_name
   my $cat;
   return unless($number); #number=0 => TIDの指定が不正です
   return if(exists($tid->{$number}));
+  sleep 1;
   my $config = XMLin(get(sprintf 
     qq|http://cal.syoboi.jp/db.php?Command=TitleLookup&TID=%d|,
      $number));
@@ -82,12 +83,12 @@ sub tid_to_name
 	$tid->{$number}->{UserPoint} = $config->{TitleItems}->{TitleItem}->{UserPoint};
 	$tid->{$number}->{UserPointRank} = $config->{TitleItems}->{TitleItem}->{UserPointRank};
 	$tid->{$number}->{TitleYomi} = $config->{TitleItems}->{TitleItem}->{TitleYomi};
-#syslog('info', "getting tid %d", $number);
+eval { syslog('info', "getting tid %d", $number); } ;
 	return;
 }
 sub main
 {
-	eval { $tid = retrieve($tiddb) if(-f $tiddb); };
+	eval { $tid = lock_retrieve($tiddb) if(-f $tiddb); };
 	if($@) { unlink $tiddb; };
 
 	foreach(@ARGV)
@@ -97,8 +98,8 @@ sub main
 		my $number = $1;
 		&tid_to_name($number);
 		printf "%s\n", encode('utf-8', $tid->{$number}->{title});
-	}	
-	nstore $tid, $tiddb;
+	}
+	lock_nstore $tid, $tiddb;
 }
 &main;
 
