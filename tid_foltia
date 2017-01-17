@@ -32,10 +32,6 @@ SQL
   $sth->execute();
   while (my $ary_ref = $sth->fetchrow_arrayref) {
   my ($row) = @$ary_ref;
-#printf "%s\n",  $row ;
-#printf "%s\n", encode('utf-8',  $row );
-#printf "%s\n", encode('utf-8', decode( 'utf-8', $row) );
-#  $title = encode('utf-8', $row);
   $title = decode('utf-8', $row);
   $title =~ s/\//／/g if($title);
   $title =~ s/\:/：/g if($title);
