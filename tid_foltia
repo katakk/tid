@@ -1,5 +1,9 @@
 #!/usr/bin/perl
 
+use strict;
+use warnings;
+use utf8;
+use Carp;
 use DBI;
 use DBD::Pg;
 
@@ -10,22 +14,44 @@ our $DB_PASS = "foltiaadmin";
 our $DB_HOST = "127.0.0.1";
 our $DB_PORT = "5432";
 
-my $dbh = DBI->connect("dbi:Pg:dbname=$DB_NAME;host=$DB_HOST;port=$DB_PORT","$DB_USER","$DB_PASS") or die "$!\n Error: failed to connect to DB.\n";
 
-foreach my $tid(@ARGV)
+sub tid_to_name
 {
-my $DBQuery =  <<"SQL";
-SELECT title
-FROM   foltia_program
-WHERE
-  tid = $tid
+  my $number = shift;
+  my $title;
+  my $cat;
+  my $dbh = DBI->connect("dbi:Pg:dbname=$DB_NAME;host=$DB_HOST;port=$DB_PORT","$DB_USER","$DB_PASS") or die "$!\n Error: failed to connect to DB.\n";
+  my $DBQuery =  <<"SQL";
+  SELECT title
+  FROM   foltia_program
+  WHERE
+    tid = $number
 SQL
-my $sth = $dbh->prepare($DBQuery);
-$sth->execute();
-while (my $ary_ref = $sth->fetchrow_arrayref) {
+  my $sth = $dbh->prepare($DBQuery);
+  $sth->execute();
+  while (my $ary_ref = $sth->fetchrow_arrayref) {
   my ($row) = @$ary_ref;
-  print $row , "\n";
+  $title = $row;
+    last;
+  }
+  $sth->finish;
+  $dbh->disconnect;
+  $title =~ s/\//／/g if($title);
+  $title =~ s/\:/：/g if($title);
+  $title =~ s/\*/＊/g if($title);
+  $title =~ s/\?/？/g if($title);
+  $title =~ s/\"/”/g if($title);
+  $title =~ s/\</＜/g if($title);
+  $title =~ s/\>/＞/g if($title);
+  $title =~ s/\|/｜/g if($title);
+  $title =~ s/\"/”/g if($title);
+  $title =~ s/\!/！/g if($title); 
+  $title =~ s/\\/＼/g if($title);
+  $title =~ s/♡/_/g  if($title); 
+  return $title;
 }
-$sth->finish;
+
+foreach (@ARGV)
+{
+print tid_to_name($_) ;
 }
-$dbh->disconnect;
