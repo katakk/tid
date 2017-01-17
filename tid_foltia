@@ -6,6 +6,7 @@ use utf8;
 use Carp;
 use DBI;
 use DBD::Pg;
+use Encode qw/encode decode/;
 
 # PostgreSQL
 our $DB_NAME = "foltia";
@@ -31,11 +32,11 @@ SQL
   $sth->execute();
   while (my $ary_ref = $sth->fetchrow_arrayref) {
   my ($row) = @$ary_ref;
-  $title = $row;
-    last;
-  }
-  $sth->finish;
-  $dbh->disconnect;
+#printf "%s\n",  $row ;
+#printf "%s\n", encode('utf-8',  $row );
+#printf "%s\n", encode('utf-8', decode( 'utf-8', $row) );
+#  $title = encode('utf-8', $row);
+  $title = decode('utf-8', $row);
   $title =~ s/\//／/g if($title);
   $title =~ s/\:/：/g if($title);
   $title =~ s/\*/＊/g if($title);
@@ -48,10 +49,14 @@ SQL
   $title =~ s/\!/！/g if($title); 
   $title =~ s/\\/＼/g if($title);
   $title =~ s/♡/_/g  if($title); 
+    last;
+  }
+  $sth->finish;
+  $dbh->disconnect;
   return $title;
 }
 
 foreach (@ARGV)
 {
-print tid_to_name($_) ;
+printf "%s\n", encode('utf-8', &tid_to_name($_));
 }
