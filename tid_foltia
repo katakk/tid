@@ -1,0 +1,31 @@
+#!/usr/bin/perl
+
+use DBI;
+use DBD::Pg;
+
+# PostgreSQL
+our $DB_NAME = "foltia";
+our $DB_USER = "foltia";
+our $DB_PASS = "foltiaadmin";
+our $DB_HOST = "127.0.0.1";
+our $DB_PORT = "5432";
+
+my $dbh = DBI->connect("dbi:Pg:dbname=$DB_NAME;host=$DB_HOST;port=$DB_PORT","$DB_USER","$DB_PASS") or die "$!\n Error: failed to connect to DB.\n";
+
+foreach my $tid(@ARGV)
+{
+my $DBQuery =  <<"SQL";
+SELECT title
+FROM   foltia_program
+WHERE
+  tid = $tid
+SQL
+my $sth = $dbh->prepare($DBQuery);
+$sth->execute();
+while (my $ary_ref = $sth->fetchrow_arrayref) {
+  my ($row) = @$ary_ref;
+  print $row , "\n";
+}
+$sth->finish;
+}
+$dbh->disconnect;
