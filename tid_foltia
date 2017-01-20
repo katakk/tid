@@ -3,36 +3,37 @@
 use strict;
 use warnings;
 use utf8;
+use Encode qw/encode decode/;
 use Carp;
 use DBI;
 use DBD::Pg;
-use Encode qw/encode decode/;
+use DBD::SQLite;
 
 # PostgreSQL
-our $DB_NAME = "foltia";
-our $DB_USER = "foltia";
-our $DB_PASS = "foltiaadmin";
-our $DB_HOST = "127.0.0.1";
-our $DB_PORT = "5432";
-
+my $DSN="dbi:Pg:dbname=foltia;host=localhost;port=5432";
+my $DBUser="foltia";
+my $DBPass="foltiaadmin";
 
 sub tid_to_name
 {
   my $number = shift;
   my $title;
   my $cat;
-  my $dbh = DBI->connect("dbi:Pg:dbname=$DB_NAME;host=$DB_HOST;port=$DB_PORT","$DB_USER","$DB_PASS") or die "$!\n Error: failed to connect to DB.\n";
+  my $dbh;
+$dbh = DBI->connect($DSN,$DBUser,$DBPass) || die $!;
+
   my $DBQuery =  <<"SQL";
   SELECT title
   FROM   foltia_program
   WHERE
-    tid = $number
+    tid = ?
 SQL
+
   my $sth = $dbh->prepare($DBQuery);
-  $sth->execute();
-  while (my $ary_ref = $sth->fetchrow_arrayref) {
-  my ($row) = @$ary_ref;
-  $title = decode('utf-8', $row);
+$sth->execute($number);
+  ($title) = $sth->fetchrow_array;
+  $sth->finish;
+  $title = decode('utf-8', $title);
   $title =~ s/\//／/g if($title);
   $title =~ s/\:/：/g if($title);
   $title =~ s/\*/＊/g if($title);
@@ -45,9 +46,6 @@ SQL
   $title =~ s/\!/！/g if($title); 
   $title =~ s/\\/＼/g if($title);
   $title =~ s/♡/_/g  if($title); 
-    last;
-  }
-  $sth->finish;
   $dbh->disconnect;
   return $title;
 }
