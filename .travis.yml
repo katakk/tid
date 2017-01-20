@@ -3,9 +3,14 @@ language: c
 services:
   - postgresql
 
+postgresql: &postgresql
+  adapter: postgresql
+  username: foltia
+  password: foltiaadmin
+  min_messages: ERROR
+
 before_script:
   - psql -c 'CREATE DATABASE foltia' -U postgres
-  - psql -c 'CREATE USER foltia PASSWORD foltiaadmin' -U postgres
   
 script:
   - perl tid 3893
