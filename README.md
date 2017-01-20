@@ -3,16 +3,14 @@
 しょぼいカレンダーのTIDからアニメタイトル引っ張ってくるやつ
 [http://cal.syoboi.jp/db.php](https://sites.google.com/site/syobocal/spec/db-php)
 
-アクセスする前に一度ローカルdbにあるかどうか問い合わせてなければ問い合わせ。
-
-    tid.db を読みます。
-    なければ tid を問い合わせます。httpで
-    tid.db を保存
+アクセスする前に一度ポスグレにあるかどうか問い合わせてなければしょぼカルに問い合わせ。
     
 # tid_foltia
 
 ローカルのぞうさんSQLからアニメタイトルアニメタイトル引っ張ってくるやつ
-   
+
+こっちはfoltia_program というテーブルからとってくる
+   
 ## インストール
 
     $ chmod 755 ./tid 
