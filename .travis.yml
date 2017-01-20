@@ -29,3 +29,6 @@ addons:
     - libwww-perl
     - libxml-simple-perl
     - libxml-parser-perl
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
