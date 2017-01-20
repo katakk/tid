@@ -16,6 +16,8 @@ addons:
   apt:
     packages:
     - libdbi-perl
+    - libdbd-pg-perl
+    - libdbd-sqlite3-perl
     - libwww-perl
     - libxml-simple-perl
     - libxml-parser-perl
