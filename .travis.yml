@@ -4,7 +4,7 @@ services:
   - postgresql
 
 before_script:
-  - psql -c 'create database travis_ci_test' -U postgres
+  - psql -c 'CREATE DATABASE foltia' -U postgres
   - psql -c 'CREATE ROLE foltia WITH LOGIN PASSWORD foltiaadmin' -U postgres
   
 script:
