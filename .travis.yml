@@ -15,6 +15,7 @@ script:
 addons:
   apt:
     packages:
+    - libdbi-perl
     - libwww-perl
     - libxml-simple-perl
     - libxml-parser-perl
