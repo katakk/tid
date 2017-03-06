@@ -236,7 +236,17 @@ sub name_to_tid
 	{
 		($tid, $title) = @$arr_ref;
 		next unless(defined $title);
-		printf "%s\n", $tid if($title =~ /$name/);
+		if($title =~ /$name/)
+		{
+			if( -d sprintf "/home/foltia/php/tv/%s.localized", $tid )
+			{
+				printf "%s + %s\n", $tid, $title;
+				system "ls -laFh " . sprintf "/home/foltia/php/tv/%s.localized/mp4/", $tid ;
+			}
+			else {
+				printf "%s - %s\n", $tid, $title;
+			}
+		}
 	}
 }
 
