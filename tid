@@ -91,6 +91,14 @@ SQL
     tid = ?
 SQL
 
+  my $DBQueryAll =  <<"SQL";
+  SELECT
+    tid
+    , title 
+  FROM
+    public.syobocal_program
+SQL
+
 setlogsock 'unix';
 openlog($0, 'pid', 'local0');
 my $regex = '\.(m2t|MP4|aac)$';
@@ -216,6 +224,22 @@ sub tid_to_name
 eval { syslog('info', "getting tid %d", $number); } ;
 	return;
 }
+
+
+sub name_to_tid
+{
+	my $name = shift;
+	my ($tid, $title);
+	my $sth = $dbh->prepare($DBQueryAll);
+	$sth->execute();
+	while ( my $arr_ref = $sth->fetchrow_arrayref )
+	{
+		($tid, $title) = @$arr_ref;
+		next unless(defined $title);
+		printf "%s\n", $tid if($title =~ /$name/);
+	}
+}
+
 sub main
 {
 	#PG>
@@ -230,12 +254,15 @@ sub main
 	foreach(@ARGV)
 	{
 		s/^(MAQ|MHD)\-//;
-		next unless(/(\d+)/);
-		my $number = $1;
-		&tid_to_name($number);
-		&tid_to_name($number);
-		printf "%s\n", $tid->{$number}->{title};
-	}
+		my $arg = $_;
+		if($arg =~ /^\d+$/) {
+                        &tid_to_name($arg);
+                        &tid_to_name($arg);
+                        printf "%s\n", $tid->{$arg}->{title};
+                } else {
+                        &name_to_tid($arg);
+                }
+        }
 	#PG>
 	$dbh->disconnect;
 	#<PG
