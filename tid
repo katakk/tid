@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use utf8;
 use Carp;
-use Sys::Syslog qw(:DEFAULT setlogsock);
+#use Sys::Syslog qw(:DEFAULT setlogsock);
 use Storable qw/lock_nstore lock_retrieve/;
 use File::Find;
 use File::Path;
@@ -17,8 +17,8 @@ use DBD::Pg;
 use DBD::SQLite;
 
 # PostgreSQL
-my $DSN="dbi:Pg:dbname=foltia;host=localhost;port=5432";
-#my $DSN="dbi:SQLite:syobocal.sqlite";
+#my $DSN="dbi:Pg:dbname=foltia;host=localhost;port=5432";
+my $DSN="dbi:SQLite:syobocal.sqlite";
 my $DBUser="foltia";
 my $DBPass="foltiaadmin";
 my $dbh;
@@ -107,8 +107,8 @@ SQL
     public.syobocal_program
 SQL
 
-setlogsock 'unix';
-openlog($0, 'pid', 'local0');
+#setlogsock 'unix';
+#openlog($0, 'pid', 'local0');
 my $regex = '\.(m2t|MP4|aac)$';
 my $dept = '/record/';
 my $nomakedir = 0;
