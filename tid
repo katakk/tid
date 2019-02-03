@@ -272,7 +272,7 @@ sub main
                         &tid_to_name($arg);
                         printf "%s\n", encode('cp932', decode( 'utf8', $tid->{$arg}->{title}));
                 } else {
-                        &name_to_tid($arg);
+                        &name_to_tid(encode('utf8', decode( 'cp932', $arg)));
                 }
         }
 	#PG>
