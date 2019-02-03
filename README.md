@@ -3,7 +3,7 @@
 しょぼいカレンダーのTIDからアニメタイトル引っ張ってくるやつ
 [http://cal.syoboi.jp/db.php](https://sites.google.com/site/syobocal/spec/db-php)
 
-アクセスする前に一度ポスグレにあるかどうか問い合わせてなければしょぼカルに問い合わせ。
+アクセスする前に一度SQLite3にあるかどうか問い合わせてなければしょぼカルに問い合わせ。
    
 ## インストール
 
