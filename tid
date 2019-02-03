@@ -8,7 +8,7 @@ use Carp;
 use Storable qw/lock_nstore lock_retrieve/;
 use File::Find;
 use File::Path;
-use Encode 'encode';
+use Encode qw/encode decode/;
 use LWP::Simple qw/get/;
 use XML::Simple; #sudo yum install  expat-devel perl-XML-Simple
 use Data::Dumper;
@@ -270,7 +270,7 @@ sub main
 		if($arg =~ /^\d+$/) {
                         &tid_to_name($arg);
                         &tid_to_name($arg);
-                        printf "%s\n", $tid->{$arg}->{title};
+                        printf "%s\n", encode('cp932', decode( 'utf8', $tid->{$arg}->{title}));
                 } else {
                         &name_to_tid($arg);
                 }
