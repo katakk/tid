@@ -104,7 +104,7 @@ SQL
     tid
     , title 
   FROM
-    public.syobocal_program
+    syobocal_program
 SQL
 
 setlogsock 'unix';
