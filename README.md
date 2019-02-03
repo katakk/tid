@@ -7,6 +7,8 @@
    
 ## インストール
 
+    # sudo apt install libwww-perl libxml-perl libxml-simple-perl libdbi-perl libdbd-pg-perl libdbd-sqlite3-perl
+
     $ chmod 755 ./tid 
     $ cp ./tid /usr/local/bin/
     
