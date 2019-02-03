@@ -3,8 +3,9 @@
 しょぼいカレンダーのTIDからアニメタイトル引っ張ってくるやつ
 [http://cal.syoboi.jp/db.php](https://sites.google.com/site/syobocal/spec/db-php)
 
-アクセスする前に一度ポスグレにあるかどうか問い合わせてなければしょぼカルに問い合わせ。
-   
+アクセスする前に一度SQLite3にあるかどうか問い合わせてなければしょぼカルに問い合わせ。
+表示はcp932
+
 ## インストール
 
     # sudo apt install libwww-perl libxml-perl libxml-simple-perl libdbi-perl libdbd-pg-perl libdbd-sqlite3-perl
