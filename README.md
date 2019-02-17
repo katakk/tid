@@ -25,4 +25,7 @@
     ご注文はうさぎですか？
     ご注文はうさぎですか？
     
-    
+## apt
+
+    sudo apt -y install libwww-perl libxml-simple-perl libpq-dev libdbd-pg-perl libdbd-sqlite3-perl
+
